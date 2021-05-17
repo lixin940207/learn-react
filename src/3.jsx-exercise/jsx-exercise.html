@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>crate virtual DOM using js</title>
+    <style>
+      .title{
+        background-color: orange;
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/babel">
+      /*
+      区分js代码和js表达式
+      1. 表达式：一个表达式一定会产生一个值
+          a
+          a+b
+          demo(1)
+          arr.map()
+          function test() {}
+       2. 语句代码(控制代码走向，没有值)：
+          if () {}
+          for () {}
+          switch (){}
+       */
+      const data = ['Angular', 'React', 'Vue']
+      //react use array to iterate
+      const VDOM = (
+              <div>
+                <h1>front end frameworks</h1>
+                <ul>
+                  {
+                    data.map((item, index) =>{
+                      <li key=index>item</li>
+                    })
+                  }
+                </ul>
+              </div>
+      )
+      // render virtual DOM
+      ReactDOM.render(VDOM, document.getElementById("test"))
+    </script>
+  </body>
+</html>

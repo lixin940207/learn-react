@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>crate virtual DOM using js</title>
+    <style>
+      .title{
+        background-color: orange;
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/babel">
+      const myId = 'aTgUiGu'
+      const myData = 'HeLlo, rEaCt'
+
+      // create virtual DOM
+      // 1. use {} to write js expression in labels
+      // 2. className instead of class for style
+      // 3. style {{}}
+      // 4. only one root label
+      // 5. 标签首字母小写，则去html寻找同名标签，没有就报错
+      //    标签首字母大写，直接去找你定义的组件，如果没有，报错
+      const VDOM = (
+              <div>
+              <h2 className="title" id={myId.toLowerCase()}>
+                <span style="{{color:'white',fontSize:'29px'}}">{myData.toLowerCase()}</span>
+              </h2>
+                <h2 className="title" id={myId.toUpperCase()}>
+                  <span style="{{color:'white',fontSize:'29px'}}">{myData.toLowerCase()}</span>
+                </h2>
+              </div>
+      )// no quotes
+      // render virtual DOM
+      ReactDOM.render(VDOM, document.getElementById("test"))
+    </script>
+  </body>
+</html>
