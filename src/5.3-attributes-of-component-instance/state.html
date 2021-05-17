@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>crate virtual DOM using js</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../react.development.js"></script>
+    <script type="text/javascript" src="../react-dom.development.js"></script>
+    <script type="text/javascript" src="../babel.min.js"></script>
+
+    <script type="text/babel">
+      // 函数式组件
+      class Weather extends React.Component{
+        constructor(props) { //构造器总共调用一次
+          super(props);
+          this.state = {isHot: true}
+          this.changeWeather = this.changeWeather.bind(this) //解决问题
+        }
+        render(){ // 1+n次，第一次和每次更新调用一次
+          return <h2 onClick={this.changeWeather}>It's {this.state.isHot ? 'hot' : 'cold'} today.</h2>
+        }
+        changeWeather(){ //点几次，调用几次
+          // changeWeather放在哪里？ Weather的原型对象上，给实例使用
+          // 由于changeWeather 是作为onClick的回调，所以不是通过实例调用的，是直接调用
+          // 类中的方法默认开启了局部的严格模式，所以changeWeather中的this是undefined
+          const isHot = this.state.isHot
+          //attention! 状态不可直接更改， like below
+          //this.state.isHot = !isHot
+          this.setState({isHot: !isHot})
+
+        }
+      }
+      // render virtual DOM
+      ReactDOM.render(<Weather/>, document.getElementById("test"))
+
+
+
+    </script>
+  </body>
+</html>

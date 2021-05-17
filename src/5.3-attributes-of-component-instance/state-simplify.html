@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>crate virtual DOM using js</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../react.development.js"></script>
+    <script type="text/javascript" src="../react-dom.development.js"></script>
+    <script type="text/javascript" src="../babel.min.js"></script>
+
+    <script type="text/babel">
+      // 函数式组件
+      class Weather extends React.Component{
+        //初始化
+        state = {isHot: true}
+
+        render(){
+          return <h2 onClick={this.changeWeather}>It's {this.state.isHot ? 'hot' : 'cold'} today.</h2>
+        }
+
+        //自定义方法 -- 要用赋值语句的形式+箭头函数
+        changeWeather = ()=>{ //点几次，调用几次
+          const isHot = this.state.isHot
+          this.setState({isHot: !isHot})
+        }
+      }
+      // render virtual DOM
+      ReactDOM.render(<Weather/>, document.getElementById("test"))
+
+    </script>
+  </body>
+</html>

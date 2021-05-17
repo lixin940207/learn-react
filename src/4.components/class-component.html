@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>crate virtual DOM using js</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../react.development.js"></script>
+    <script type="text/javascript" src="../react-dom.development.js"></script>
+    <script type="text/javascript" src="../babel.min.js"></script>
+
+    <script type="text/babel">
+      // 函数式组件
+      class MyComponent extends React.Component{
+        // 可以不写构造器
+        // 必须写render，必须有返回值
+        render(){
+          return <h2>class component</h2>
+        }
+      }
+      // render virtual DOM
+      ReactDOM.render(<MyComponent/>, document.getElementById("test"))
+      /*
+      what does React do in the sentence above?
+        1. React parse <MyComponent/>, find the component
+        2. found that the component is defined by class, then new an instance of the class, call instance.render()
+        3. return virtual Dom to real Dom
+       */
+    </script>
+  </body>
+</html>
