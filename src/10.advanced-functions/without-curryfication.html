@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>crate virtual DOM using js</title>
+</head>
+<body>
+<div id="test"></div>
+<script type="text/javascript" src="../react.development.js"></script>
+<script type="text/javascript" src="../react-dom.development.js"></script>
+<script type="text/javascript" src="../babel.min.js"></script>
+<script type="text/javascript" src="../prop-types.js"></script>
+
+<script type="text/babel">
+
+    class Login extends React.Component {
+        // DOM变化，随时改变状态，就叫受控组件，没用Ref，推荐！
+        state = {
+            username: '',
+            password: ''
+        }
+        //1。 接受的参数是函数，那就是高阶函数
+        //2。若返回值是一个函数，那么就是高阶函数
+        // 常见的高阶函数：
+        // Promise, setTimeout, arr.map()
+        /*
+        下面这个函数是高阶函数，也是柯里化函数
+        柯里化的意思是：函数中又调另外的函数，最后所有的这些函数的参数统一处理
+         */
+        saveFormData = (dataType, event) => {
+            this.setState({[dataType]:event.target.value})
+
+        }
+
+        handleSubmit = (event) => {
+            event.preventDefault()
+            const {username, password} = this.state
+            alert(`your username is ${username}, password is ${password}`)
+        }
+
+        // 由于事件（form）和需要获取的值（input）不在一个DOM上，所以只能用ref
+        render() {
+            return (
+                <form action="http://www.atguigu.com" onSubmit={this.handleSubmit}>
+                    username:<input onChange={(event)=>{this.saveFormData('username',event.target.value)}} type="text" name="username"/>
+                    password:<input onChange={(event)=>{this.saveFormData('password',event.target.value)}} type="password" name="password"/>
+                    <button>login</button>
+                </form>
+            )
+        }
+    }
+
+    // 批量传递参数
+    ReactDOM.render(<Login/>, document.getElementById("test"))
+
+</script>
+</body>
+</html>
