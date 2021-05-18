@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>crate virtual DOM using js</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../react.development.js"></script>
+    <script type="text/javascript" src="../react-dom.development.js"></script>
+    <script type="text/javascript" src="../babel.min.js"></script>
+    <script type="text/javascript" src="../prop-types.js"></script>
+
+    <script type="text/babel">
+
+      class Login extends React.Component{
+        //非受控组件：现用现取
+        handleSubmit = (event)=>{
+          event.preventDefault()//阻止表单提交
+          alert(`your username is ${this.username.value}, password is ${this.password.value}`)
+        }
+        // 由于事件（form）和需要获取的值（input）不在一个DOM上，所以只能用ref
+        render() {
+          return (
+                  <form onSubmit={this.handleSubmit}>
+                    username:<input ref={c=>this.username=c} type="text" name="username"/>
+                    password:<input ref={c=>this.password=c} type="password" name="password"/>
+                    <button>login</button>
+                  </form>
+          )
+        }
+      }
+
+      // 批量传递参数
+      ReactDOM.render(<Login/>, document.getElementById("test"))
+
+    </script>
+  </body>
+</html>
