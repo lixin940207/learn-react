@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>crate virtual DOM using js</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../react.development.js"></script>
+    <script type="text/javascript" src="../react-dom.development.js"></script>
+    <script type="text/javascript" src="../babel.min.js"></script>
+
+    <script type="text/babel">
+      // 函数式组件
+      class Person extends React.Component{
+        render(){
+          return (
+                  <ul>
+                    <li>姓名：{this.props.name}</li>
+                    <li>年龄：{this.props.age}</li>
+                  </ul>
+          )
+        }
+      }
+      // 批量传递参数
+      const p = {name:"老刘", age:30}
+      ReactDOM.render(<Person {...p}/>, document.getElementById("test"))
+
+    </script>
+  </body>
+</html>
