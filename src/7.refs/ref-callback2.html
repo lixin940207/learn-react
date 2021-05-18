@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>crate virtual DOM using js</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../react.development.js"></script>
+    <script type="text/javascript" src="../react-dom.development.js"></script>
+    <script type="text/javascript" src="../babel.min.js"></script>
+    <script type="text/javascript" src="../prop-types.js"></script>
+
+    <script type="text/babel">
+      // 函数式组件
+      class Demo extends React.Component{
+        state = {isHot:true}
+        showData = ()=> {
+          alert(this.input1.value)
+        }
+        changeWeather = () => {
+          this.setState({isHot:!this.state.isHot})
+        }
+        render() {
+          return (
+                  <div>
+                    <h2>it's {this.state.isHot? 'hot' : 'cold'} today. </h2>
+                    ref写成内联函数，会在更新的时候调用两次（第一次传空，第二次传当前节点）
+                    写成class绑定函数的形式，就不会调用两次了
+                    但两种方式都影响不大
+                    <input ref={ (currentNode) => {this.input1=currentNode;console.log('@'+currentNode);}} type="text" placeholder="click and notify"/>
+                    <button onClick={this.showData}>clickme</button>
+                    <button onClick={this.changeWeather}>change weather</button>
+                  </div>
+          )
+        }
+      }
+
+      // 批量传递参数
+      ReactDOM.render(<Demo/>, document.getElementById("test"))
+
+    </script>
+  </body>
+</html>

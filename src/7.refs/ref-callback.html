@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>crate virtual DOM using js</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../react.development.js"></script>
+    <script type="text/javascript" src="../react-dom.development.js"></script>
+    <script type="text/javascript" src="../babel.min.js"></script>
+    <script type="text/javascript" src="../prop-types.js"></script>
+
+    <script type="text/babel">
+      // 函数式组件
+      class Demo extends React.Component{
+        showData = ()=> {
+          alert(this.input1.value)
+
+        }
+        showData2 = ()=> {
+          alert(this.input2.value)
+
+        }
+        render() {
+          return (
+                  <div>
+                    / 字符串类型的ref效率低，不推荐用！！
+                    <input ref={ currentNode => this.input1=currentNode} type="text" placeholder="click and notify"/>
+                    <button onClick={this.showData}>clickme</button>
+                    <input onBlur={this.showData2} ref={ currentNode => this.input2=currentNode} type="text" placeholder="blur and notify"/>
+                  </div>
+          )
+        }
+      }
+
+      // 批量传递参数
+      ReactDOM.render(<Demo/>, document.getElementById("test"))
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>crate virtual DOM using js</title>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../react.development.js"></script>
+    <script type="text/javascript" src="../react-dom.development.js"></script>
+    <script type="text/javascript" src="../babel.min.js"></script>
+    <script type="text/javascript" src="../prop-types.js"></script>
+
+    <script type="text/babel">
+
+      class Demo extends React.Component{
+        // 不要过度使用ref
+        // 某些情况下可以省略：发生事件的DOM元素和要操作的DOM元素是同一个
+        // 比如下面的onblur，input框失去焦点，提示input框内容，是同一个DOM元素，就可以省略REF
+        myRef = React.createRef()
+
+        showData = ()=> {
+          alert(this.myRef.current.value)
+
+        }
+        showData2 = (event)=> {
+          alert(event.target.value)
+
+        }
+        render() {
+          return (
+                  <div>
+
+                    <input ref={this.myRef} type="text" placeholder="click and notify"/>
+                    <button onClick={this.showData}>clickme</button>
+                    <input onBlur={this.showData2} type="text" placeholder="blur and notify"/>
+                  </div>
+          )
+        }
+      }
+
+      // 批量传递参数
+      ReactDOM.render(<Demo/>, document.getElementById("test"))
+
+    </script>
+  </body>
+</html>
