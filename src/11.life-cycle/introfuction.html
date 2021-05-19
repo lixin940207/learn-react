@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>crate virtual DOM using js</title>
+</head>
+<body>
+<div id="test"></div>
+<script type="text/javascript" src="../react.development.js"></script>
+<script type="text/javascript" src="../react-dom.development.js"></script>
+<script type="text/javascript" src="../babel.min.js"></script>
+<script type="text/javascript" src="../prop-types.js"></script>
+
+<script type="text/babel">
+
+    class Life extends React.Component {
+        state = {opacity:1}
+        abandon = ()=>{
+            ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+        }
+        // 组件挂载完成后，只一次,常用，
+        // 类似于人出生的那天
+        // 一般做一些初始化的事：开启定时器，发送网络请求，订阅消息，
+        compone ntDidMount(){
+            this.timer = setInterval(()=>{
+                let {opacity} = this.state
+                opacity -= 0.1
+                if (opacity <= 0) opacity = 1
+                this.setState({opacity: opacity})
+            },200)
+        }
+        // 组件即将卸载之前要做的事，常用
+        // 类似于人即将去世的时候
+        // 一般做一些收尾的事：关闭定时器，取消订阅
+        componentWillUnmount(){
+            clearInterval(this.timer)
+        }
+
+        //render调用是1+n（每次更新渲染）
+        render(){
+            return(
+                <div>
+                    <h2 style={{opacity:this.state.opacity}}>React学不会怎么办？</h2>
+                    <button onClick={this.abandon}>不学了</button>
+                </div>
+            )
+        }
+    }
+
+    // 批量传递参数
+    ReactDOM.render(<Life/>, document.getElementById("test"))
+
+</script>
+</body>
+</html>
