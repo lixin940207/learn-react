@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>crate virtual DOM using js</title>
+</head>
+<body>
+<div id="test"></div>
+<script type="text/javascript" src="../react.development.js"></script>
+<script type="text/javascript" src="../react-dom.development.js"></script>
+<script type="text/javascript" src="../babel.min.js"></script>
+<script type="text/javascript" src="../prop-types.js"></script>
+
+<script type="text/babel">
+
+    /*
+    Q：react中的key有什么作用？为什么遍历列表时，可以不要用index？
+    A：
+        状态数据发生变化时，新的数据会生成新的虚拟DOM，
+        随后react将新的虚拟DOM与旧的虚拟DOM进行比较，比较规则：
+            1. 相同的key
+                内容没变，使用之前的
+                内容变了，生成新的真实DOM，然后替换之前的
+            2. 没找到相同的key
+                生成新的真实DOM
+        a.所以在列表的前部新增一条数据的时候，用index作为key，其他所有的key都会改变，所有的都会生成新的虚拟DOM，没法复用之前的
+        b.如果结构中有输入类的DOM，会产生错误的DOM更新
+
+     */
+
+    class Person extends React.Component {
+        //初始化状态
+        state = {persons:[
+                {id:1, name:'zhang', age:18},
+                {id:2, name:'li', age:19}
+            ]}
+
+        addPerson = ()=>{
+            const {persons} = this.state
+            const p = {id: persons.length+1, name:'wang', age:20}
+            this.setState({persons:[p, ...persons]})
+        }
+
+        render(){
+            return(
+                <div>
+                    <h2>show person info:</h2>
+                    <button onClick={this.addPerson}>add another</button>
+                    {
+                        this.state.persons.map((person, index)=>{
+                            return <li key={index}>{person.name},{person.age}</li>
+                        })
+                    }
+                </div>
+            )
+        }
+    }
+
+    // 批量传递参数
+    ReactDOM.render(<Person/>, document.getElementById("test"))
+
+</script>
+</body>
+</html>
